@@ -8,10 +8,15 @@ def check_input (type, text):
         user_input = input(text)
 
         if type in ("string","float","int"):
-            ask_for_input = check_value(type, user_input)
-            continue
 
-        if type == "list":
+            checked_value = check_value(type, user_input)
+
+            if checked_value is True:
+                ask_for_input = False
+            else:
+                ask_for_input = True
+
+        elif type == "list":
             try:
                 elements_in_list = user_input.split(",")
             except:
@@ -43,4 +48,4 @@ def check_value(type, value):
         print("coś poszło nie tak...")
         return False
 
-print(check_value("float", 0.4))
+check_input("float", "bla ")
