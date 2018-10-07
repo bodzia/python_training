@@ -7,37 +7,9 @@ def check_input (type, text):
 
         user_input = input(text)
 
-        if type == "string":
-            try:
-                new_text = str(user_input).lower()
-            except:
-                print("coś poszło nie tak...1")
-                continue
-
-            ask_for_input = False
-            return new_text
-
-        if type == "int":
-            try:
-                new_int = int(user_input)
-
-            except:
-                print("próbuj dalej...")
-                continue
-
-            ask_for_input = False
-            return new_int
-
-        if type == "float":
-            try:
-                new_float = int(user_input)
-
-            except:
-                print("próbuj dalej...")
-                continue
-
-            ask_for_input = False
-            return new_float
+        if type in ("string","float","int"):
+            ask_for_input = check_value(type, user_input)
+            continue
 
         if type == "list":
             try:
@@ -55,36 +27,20 @@ def check_input (type, text):
 
 def check_value(type, value):
 
-    if type == "string":
-        try:
+
+    try:
+        if type == "string":
             new_text = str(value).lower()
-            return new_text
-        except:
-            print("coś poszło nie tak...1")
-
-
-
-    if type == "int":
-        try:
+            return True
+        elif type == "int":
             new_int = int(value)
-            return new_int
-
-        except:
-            print("próbuj dalej...")
-
-
-
-    if type == "float":
-        try:
+            return True
+        elif type == "float":
             new_float = float(value)
-            return new_float
+            return True
 
-        except:
-            print("próbuj dalej...")
-            exit(1)
+    except:
+        print("coś poszło nie tak...")
+        return False
 
-
-
-    else:
-        print("coś poszło nie tak...3")
-
+print(check_value("float", 0.4))
