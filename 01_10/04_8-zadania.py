@@ -19,9 +19,6 @@ else:
     except:
         print("a gdzie numerki?")
         exit(0)
-    first_sum = a + b
-    second_sum = a + c
-    third_sum = b + c
 
     if ((a + b) > c) and ((a + c) > b) and ((b + c) > a):
         print("zbudujemy trójkąt")

@@ -1,5 +1,5 @@
-zakres = range(1000000000000000)
-inty = list(range(1000000000000000))
+zakres = range(100)
+inty = list(range(100))
 
 print(zakres)
 print(inty)
