@@ -13,6 +13,14 @@ def check_input (type, text):
 
             if checked_value is True:
                 ask_for_input = False
+                if type == ("float"):
+                    value = float(user_input)
+                    return value
+                elif type == ("int"):
+                    value  = int(user_input)
+                    return value
+                else:
+                    return user_input
             else:
                 ask_for_input = True
 
@@ -48,4 +56,3 @@ def check_value(type, value):
         print("coś poszło nie tak...")
         return False
 
-check_input("float", "bla ")
