@@ -56,3 +56,24 @@ def check_value(type, value):
         print("coś poszło nie tak...")
         return False
 
+def check_list(value, separator):
+    try:
+        new_value = value.split(separator)
+    except:
+        print("to nie lista")
+    return new_value
+
+def check_content(value, expected_value):
+    for element in expected_value:
+        if value == element:
+            pass
+            break
+        else:
+            print("invalid value")
+            continue
+
+def replace_string(value,character):
+    for char in value:
+        if char in character:
+            value.replace(char, '')
+    return value
