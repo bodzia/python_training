@@ -66,11 +66,15 @@ def check_list(value, separator):
 def check_content(value, expected_value):
     for element in expected_value:
         if value == element:
+            result = 'T'
             pass
             break
         else:
-            print("invalid value")
+            result = 'F'
             continue
+    if result == 'F':
+        print("invalid value")
+        quit(0)
 
 def replace_string(value,character):
     for char in value:
