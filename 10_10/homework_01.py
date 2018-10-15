@@ -8,43 +8,55 @@
 # Program ten będziemy pomału rozbudowywać, w kolejnych tygodniach
 
 import common_functions
-import csv
+
 
 options = ["add", "remove", "check"]
 second_options = ["first_name", "last_name", "company_name", "address", "city", "county", "state", "zip", "phone1",
                   "phone", "email"]
+sorted_second_options = sorted(second_options)
 option = common_functions.check_input("string", "co chcesz zrobić? \nadd/remove/check")
 check_option = common_functions.check_content(option, options)
 second_option = common_functions.check_input("string",
                                              "first_name/last_name/company_name/address/city/county/state/zip/phone1/phone/email")
-check_second_option = common_functions.check_content(second_option, second_options)
-
 chosen_option = common_functions.check_list(second_option, ",")
+chosen_option = sorted(chosen_option)
 number_of_chosen_elements = len(chosen_option)
+
+k = 0
+while k < number_of_chosen_elements:
+    check_second_option = common_functions.check_content(chosen_option[k], sorted_second_options)
+    k += 1
+
 number_of_elements = len(second_options)
 new_line = []
 element_index = 0
+new_dict = {'first_name': '', 'last_name': '', 'company_name': '', 'address': '', 'city': '', 'county': '', 'state': '', 'zip': '', 'phone1': '',
+                  'phone': '', 'email':''}
 i = 0
 j = 0
-
+l = 1
 
 with open('100-contacts-kopia.csv', 'a') as file:
-    # writer = csv.writer(file, lineterminator='\n')
     if option == 'add':
-        for element in second_options:
+        for element in sorted_second_options:
             try:
                 chosen_element = chosen_option[i]
             except:
                 print("koniec")
             if element == chosen_element:
                 value = common_functions.check_input("string", chosen_element)
-                new_line.append(value)
+                new_dict[element] = value
+
                 i += 1
             else:
-                new_line.append("Unknown")
+                value = "Unknown"
+                new_dict[element] = value
+
+        for second_element in second_options:
+            dict_value = new_dict[second_element]
+            new_line.append(dict_value)
 
         record = ','.join(new_line)
-        # new_record = common_functions.replace_string(record,"[]'")
         print(record)
         file.seek(2)
         file.write('\n' + record)
@@ -80,6 +92,7 @@ with open('100-contacts-kopia.csv', 'r+') as file:
         all_lines = file.readlines()
         number_of_lines=len(all_lines)
         for element in second_options:
+
             try:
                 chosen_element = chosen_option[i]
             except:
@@ -102,6 +115,6 @@ with open('100-contacts-kopia.csv', 'r+') as file:
                 with open('100-contacts.csv', 'w') as new_file:
                     for element in all_lines:
                         new_file.write(element)
-        import os
-
-        os.rename('100-contacts.csv', '100-contacts-kopia.csv')
+        #optional
+        #import os
+        #os.rename('100-contacts.csv', '100-contacts-kopia.csv')
