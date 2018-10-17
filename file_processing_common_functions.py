@@ -37,15 +37,18 @@ def find_record_value(filename, key, value):
     return result
 
 def find_record_key(filename, key):
+    records = []
     all_records = get_all_records(filename)
     for record in all_records:
+        value = record.get(key)
+        records.append(value)
+    for value in records:
+        number_of_occurences = records.count(value)
+        if number_of_occurences > 1:
+                records.remove(value)
+    print(records)
 
-    result = next((item for item in all_records if item.get(key)), False)
-    if result != False:
-        print("record exists")
-    else:
-        print("record does not exist")
-    return result
+
 
 def remove_record(filename,key,value):
     all_records = get_all_records(filename)
@@ -77,12 +80,12 @@ def generate_record(option_list):
     output.append(record)
     export_dictionary_to_file('test_2.csv', output)
 
-def count_records_key(key):
+# def count_records_key(key):
+#
+#
+# def count_records_value(key,value):
 
-
-def count_records_value(key,value):
-
-
+#find_record_key('test_2.csv',"first_name")
 #option_list = ["first_name","email","phone"]
 #generate_record(option_list)
 #dictionary = get_all_records('test.csv')
@@ -91,3 +94,4 @@ def count_records_value(key,value):
 #find_record('test.csv', 'first_name', "Minna")
 #get_all_records('C:/Users/bpaczk/Desktop/python_training/10_10/100-contacts-kopia.csv')
 #add_record('C:/Users/bpaczk/Desktop/python_training/10_10/100-contacts-kopia.csv', "bla, bla,bla")
+
