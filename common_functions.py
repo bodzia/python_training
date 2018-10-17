@@ -81,3 +81,12 @@ def replace_string(value,character):
         if char in character:
             value.replace(char, '')
     return value
+
+def check_list_content(value_list, expected_value_list):
+    i = 0
+    number_of_elements = len(value_list)
+    value_list = sorted(value_list)
+    expected_value_list = sorted(expected_value_list)
+    while i < number_of_elements:
+        check_result = check_content(value_list[i], expected_value_list)
+        i += 1
