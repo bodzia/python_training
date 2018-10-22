@@ -90,3 +90,4 @@ def check_list_content(value_list, expected_value_list):
     while i < number_of_elements:
         check_result = check_content(value_list[i], expected_value_list)
         i += 1
+    return value_list
