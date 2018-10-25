@@ -1,6 +1,7 @@
 from copy import copy
 import common_functions
 
+
 dict_keys = ["first_name", "last_name", "company_name", "address", "city", "county", "state", "zip", "phone1", "phone",
              "email"]
 
@@ -88,7 +89,7 @@ def generate_record(option_list):
         value = common_functions.check_input("string", element)
         record[element] = value
     output.append(record)
-    export_dictionary_to_file('100-contacts-kopia.csv', output)
+    export_dictionary_to_file('test_2.csv', output)
 
 
 
@@ -122,7 +123,7 @@ def create_dictionary_input(option_list):
         value = common_functions.check_input("string", element)
         dictionary[element] = value
     output.append(dictionary)
-    return output
+    return dictionary
 
 def create_dictionary_file(filename,option_list):
     output = []
@@ -135,8 +136,81 @@ def create_dictionary_file(filename,option_list):
         output.append(copy(dictionary))
     return output
 
-print(create_dictionary_file('test_2.csv',["first_name","phone","email"]))
-# print(create_dictionary_input(["first_name","phone","email"]))
+def create_dictionary_to_export(all_records):
+    output = []
+    dictionary = dict.fromkeys(dict_keys)
+    for record in all_records:
+        for element in dict_keys:
+            value = record.get(element)
+            dictionary[element] = value
+        output.append(copy(dictionary))
+    return output
+
+def create_expected_dictionary (options):
+    expected_values = create_dictionary_input(options)
+    expected_values = dict(expected_values)
+    return expected_values
+
+def find_record_multiple_values(filename, options):
+    full_dictionary = get_all_records(filename)
+    expected_values = create_expected_dictionary(options)
+    number_of_keys = len(expected_values.keys())
+    number_of_occurences = 0
+    index = []
+    for element in full_dictionary:
+        i = 0
+        for key,value in expected_values.items():
+            if element[key].lower() == value.lower():
+                i += 1
+            if i == number_of_keys:
+                number_of_occurences += 1
+                index = [i for i, x in enumerate(full_dictionary) if x == element]
+                #index.append(current_index)
+    return [number_of_occurences,index]
+
+
+# def get_index_value(filename,options):
+#     full_dictionary = get_all_records(filename)
+#     expected_values = create_dictionary_input(options)
+#     expected_values = dict(expected_values)
+#     number_of_keys = len(expected_values.keys())
+#     number_of_occurences = 0
+#     for element in full_dictionary:
+#         i = 0
+#         for key, value in expected_values.items():
+#             if element[key] == value:
+#                 index = full_dictionary.index(result)
+#                 return index
+#                 i += 1
+#             else:
+#                 print("can't find")
+
+def remove_record_by_index(filename,options):
+    all_records = get_all_records(filename)
+    search_result = find_record_multiple_values(filename,options)
+    if  search_result[0] > 0:
+        indexes = search_result[1]
+        number_of_records = len(indexes)
+        i = 0
+        while i < number_of_records:
+            index = int(indexes[i])
+            record_to_be_removed = all_records[index - i]
+            all_records.remove(record_to_be_removed)
+            i+=1
+        print ("success")
+        new_database = create_dictionary_to_export(all_records)
+        export_dictionary_to_file('test_remove.csv', new_database)
+    else:
+        print("no record to delete")
+
+
+#print(get_index_value('test_2.csv',["first_name","last_name"]))
+#print(find_record_multiple_values('test_2.csv',["first_name","last_name"]))
+#remove_record_by_index('test_2.csv',["first_name","last_name"])
+#get_remaining_values('test_2.csv', ["first_name","phone"])
+#print(find_record_multiple_values('test_2.csv',["first_name","email"]))
+#print(create_dictionary_file('test_2.csv',["first_name","phone","email"]))
+#print(create_dictionary_input(["first_name","phone","email"]))
 # print(find_record_value('test_2.csv', 'first_name', "Minna", 'remove'))
 # count_records_value('test_2.csv', 'first_name', "Minna")
 # count_records_key('test_2.csv',"phone")
@@ -148,4 +222,8 @@ print(create_dictionary_file('test_2.csv',["first_name","phone","email"]))
 # remove_record('test.csv', 'first_name', "Minna")
 # find_record('test.csv', 'first_name', "Minna")
 # get_all_records('C:/Users/bpaczk/Desktop/python_training/10_10/100-contacts-kopia.csv')
+#print(get_all_records('test_2.csv'))
 # add_record('C:/Users/bpaczk/Desktop/python_training/10_10/100-contacts-kopia.csv', "bla, bla,bla")
+
+#Abel,Maclead,Rangoni Of Florence,37275 St  Rt 17m M,Middle Island,Suffolk,NY,11953,631-335-3414,631-677-3675,amaclead@gmail.com
+
